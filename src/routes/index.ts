@@ -4,12 +4,14 @@ import shorten from "./handlers/shorten";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
-  res.send({
-    status: "success",
+  const status = 200;
+  res.status(status).send({
+    success: true,
+    status: status,
     message: "URL Shortener API",
   });
 });
 
-router.get("/shorten/:short_url", shorten.getShorten)
+router.get(["/shorten", "/shorten/:short_url"], shorten.getShorten);
 
 export default router;

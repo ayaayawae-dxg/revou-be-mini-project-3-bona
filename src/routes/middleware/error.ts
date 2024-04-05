@@ -1,6 +1,23 @@
 import { Request, Response, NextFunction } from "express";
 
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
-  res.status(500).send({ errors: [{ message: "Something went wrong" }] });
+interface ErrorStatus extends Error {
+  statusCode: number;
+}
+
+export const errorHandler = (
+  err: ErrorStatus,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errStatus = err.statusCode || 500;
+  const errMsg = err.message || "Something went wrong";
+  const errStack = err.stack;
+
+  console.error(errStack);
+  res.status(errStatus).send({
+    success: false,
+    status: errStatus,
+    message: errMsg,
+  });
 };
