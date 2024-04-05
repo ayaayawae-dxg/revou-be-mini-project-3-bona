@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "./routes";
 import log from "./routes/middleware/log";
-import { errorHandler } from "./routes/middleware/error";
+import { errorRes } from "./routes/helpers/response";
 
 const app = express();
 
@@ -10,6 +10,6 @@ app.use(log);
 
 app.use("/", routes);
 
-app.use(errorHandler);
+app.use(errorRes);
 
 app.listen(5000);

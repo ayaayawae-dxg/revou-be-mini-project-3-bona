@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { generate } from "shortid";
 import { createError } from "../helpers/createError";
+import { successRes } from "../helpers/response";
 
 const shortenList = new Map();
 
@@ -10,7 +11,7 @@ const get = (req: Request, res: Response, next: NextFunction) => {
     const findShorten = shortenList.get(short_url);
 
     if (!short_url || !findShorten) {
-      createError({ message: "short_url not found", statusCode: 404 });
+      createError({ message: "short_url not found", status: 404 });
     }
 
     res.redirect(301, findShorten);
@@ -24,14 +25,13 @@ const create = (req: Request, res: Response, next: NextFunction) => {
     const { url } = req.body;
 
     if (!url) {
-      createError({ message: "url not specified", statusCode: 400 });
+      createError({ message: "url not specified", status: 400 });
     }
 
     const key = generate();
     shortenList.set(key, url);
 
-    res.send({
-      success: true,
+    successRes(res, {
       status: 200,
       message: "URL shortened successfully",
       data: { short_url: key, long_url: url },

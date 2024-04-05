@@ -1,19 +1,19 @@
 interface createErrorProp {
   message: string;
-  statusCode: number;
+  status: number;
 }
 
 class CustomError extends Error {
-  statusCode: number;
+  status: number;
 
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, status: number) {
     super(message)
-    this.statusCode = statusCode
+    this.status = status
   }
 }
 
-export const createError = ({ message, statusCode }: createErrorProp) => {
-  const error = new CustomError(message, statusCode)
-  error.statusCode = statusCode
+export const createError = ({ message, status }: createErrorProp) => {
+  const error = new CustomError(message, status)
+  error.status = status
   throw error;
 };
