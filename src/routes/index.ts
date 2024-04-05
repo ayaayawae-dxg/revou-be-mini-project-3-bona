@@ -12,6 +12,7 @@ router.get("/", (req: Request, res: Response) => {
   });
 });
 
-router.get(["/shorten", "/shorten/:short_url"], shorten.getShorten);
+router.get(["/shorten", "/shorten/:short_url"], shorten.get);
+router.post("/shorten", shorten.create);
 
 export default router;
